@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bijwoorden van Frequentie - Gevorderd</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        .drag-item { touch-action: none; cursor: grab; transition: transform 0.2s, box-shadow 0.2s; }
+        .drag-item:active { cursor: grabbing; transform: scale(1.05); }
+        .drop-zone { min-height: 50px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+        
+        /* WordPress Widget Compatibility Fixes */
+        .wp-block-html { padding: 0 !important; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-900 pb-20">
+
+    <!-- Hero Header -->
+    <div class="bg-indigo-700 text-white py-12 px-4 shadow-lg mb-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl font-extrabold mb-3">Nederlandse Grammatica</h1>
+            <p class="text-indigo-100 text-lg max-w-2xl mx-auto">
+                Beheers de nuances van tijd en frequentie: van <span class="font-bold underline decoration-yellow-400">altijd</span> tot <span class="font-bold underline decoration-pink-400">nooit</span>.
+            </p>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4">
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-wrap gap-2 mb-8 justify-center sticky top-4 z-50 p-2 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200">
+            <button onclick="showSection('theory', this)" class="tab-btn px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold transition-all shadow-md">Theorie</button>
+            <button onclick="showSection('dragdrop', this)" class="tab-btn px-6 py-2.5 rounded-xl bg-white text-slate-600 font-semibold hover:bg-slate-100 transition-all">Frequentie</button>
+            <button onclick="showSection('wordorder', this)" class="tab-btn px-6 py-2.5 rounded-xl bg-white text-slate-600 font-semibold hover:bg-slate-100 transition-all">Zinsbouw</button>
+            <button onclick="showSection('context', this)" class="tab-btn px-6 py-2.5 rounded-xl bg-white text-slate-600 font-semibold hover:bg-slate-100 transition-all">Nuance</button>
+        </nav>
+
+        <!-- Section: Theory -->
+        <div id="section-theory" class="content-section space-y-6">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold mb-6 text-indigo-800 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    De Trap van Frequentie
+                </h2>
+                
+                <div class="space-y-3 mb-10">
+                    <div class="flex items-center gap-4 group">
+                        <span class="w-16 font-mono text-slate-400">100%</span> 
+                        <div class="flex-1 bg-slate-100 h-6 rounded-full overflow-hidden">
+                            <div class="bg-emerald-500 h-full w-[100%]"></div>
+                        </div> 
+                        <span class="w-28 font-bold text-emerald-700">Altijd</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <span class="w-16 font-mono text-slate-400">90%</span> 
+                        <div class="flex-1 bg-slate-100 h-6 rounded-full overflow-hidden">
+                            <div class="bg-emerald-400 h-full w-[90%]"></div>
+                        </div> 
+                        <span class="w-28 font-bold text-emerald-600">Meestal</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <span class="w-16 font-mono text-slate-400">75%</span> 
+                        <div class="flex-1 bg-slate-100 h-6 rounded-full overflow-hidden">
+                            <div class="bg-teal-400 h-full w-[75%]"></div>
+                        </div> 
+                        <span class="w-28 font-bold text-teal-600">Vaak</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <span class="w-16 font-mono text-slate-400">50%</span> 
+                        <div class="flex-1 bg-slate-100 h-6 rounded-full overflow-hidden">
+                            <div class="bg-sky-400 h-full w-[50%]"></div>
+                        </div> 
+                        <span class="w-28 font-bold text-sky-600">Regelmatig</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <span class="w-16 font-mono text-slate-400">30%</span> 
+                        <div class="flex-1 bg-slate-100 h-6 rounded-full overflow-hidden">
+                            <div class="bg-amber-400 h-full w-[30%]"></div>
+                        </div> 
+                        <span class="w-28 font-bold text-amber-600">Soms</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <span class="w-16 font-mono text-slate-400">10%</span> 
+                        <div class="flex-1 bg-slate-100 h-6 rounded-full overflow-hidden">
+                            <div class="bg-orange-400 h-full w-[10%]"></div>
+                        </div> 
+                        <span class="w-28 font-bold text-orange-600">Zelden</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <span class="w-16 font-mono text-slate-400">0%</span> 
+                        <div class="flex-1 bg-slate-100 h-6 rounded-full overflow-hidden">
+                            <div class="bg-rose-500 h-full w-[3%]"></div>
+                        </div> 
+                        <span class="w-28 font-bold text-rose-600">Nooit</span>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-100">
+                    <h3 class="text-lg font-bold text-indigo-900 mb-3 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        Plaats in de zin:
+                    </h3>
+                    <div class="space-y-4 text-slate-700">
+                        <p>1. In een hoofdzin staat het bijwoord meestal <strong>direct na de persoonsvorm</strong>.</p>
+                        <p class="pl-4 italic border-l-2 border-indigo-300 font-medium">"Wij <u>drinken</u> <strong>vaak</strong> koffie tijdens de pauze."</p>
+                        
+                        <p>2. Als er een object in de zin staat, staat het bijwoord vaak daarna.</p>
+                        <p class="pl-4 italic border-l-2 border-indigo-300 font-medium">"Ik geef haar <strong>altijd</strong> een compliment."</p>
+
+                        <p>3. Bij <strong>inversie</strong> (bijv. tijd vooraan) komt de persoonsvorm eerst, dan het onderwerp, en dan het bijwoord.</p>
+                        <p class="pl-4 italic border-l-2 border-indigo-300 font-medium">"Vandaag <u>gaat</u> hij <strong>meestal</strong> met de fiets."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Drag and Drop -->
+        <div id="section-dragdrop" class="content-section hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-2">Oefening 1: Sorteren op percentage</h2>
+            <p class="mb-8 text-slate-500">Sleep de termen naar hun geschatte plek op de frequentiemeter.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">Woordbank</h3>
+                    <div id="word-bank" class="flex flex-wrap gap-3 p-6 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl min-h-[160px]"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">De Meter</h3>
+                    <div class="space-y-4" id="drop-targets-container"></div>
+                </div>
+            </div>
+            
+            <div class="mt-10 flex gap-4">
+                <button onclick="checkDragDrop()" class="flex-1 bg-indigo-600 text-white py-4 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">Controleer Antwoorden</button>
+                <button onclick="resetDragDrop()" class="px-6 py-4 bg-slate-100 text-slate-600 rounded-xl font-bold hover:bg-slate-200 transition">Reset</button>
+            </div>
+        </div>
+
+        <!-- Section: Word Order -->
+        <div id="section-wordorder" class="content-section hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-2">Oefening 2: Woordvolgorde</h2>
+            <p class="mb-8 text-slate-500">Bouw een correcte Nederlandse zin. Meerdere volgordes kunnen juist zijn!</p>
+            
+            <div id="word-order-container" class="space-y-10"></div>
+            
+            <button onclick="checkWordOrder()" class="mt-10 w-full bg-indigo-600 text-white py-4 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">Valideer Zinsbouw</button>
+        </div>
+
+        <!-- Section: Context -->
+        <div id="section-context" class="content-section hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-2">Oefening 3: De Juiste Nuance</h2>
+            <p class="mb-8 text-slate-500">Welke term past het beste bij de situatie?</p>
+            
+            <div id="context-container" class="space-y-8"></div>
+            
+            <button onclick="checkContext()" class="mt-10 w-full bg-indigo-600 text-white py-4 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">Check Resultaten</button>
+        </div>
+
+        <!-- Feedback Area -->
+        <div id="feedback" class="fixed bottom-6 left-1/2 -translate-x-1/2 max-w-md w-full px-6 py-4 rounded-2xl shadow-2xl hidden transform translate-y-20 transition-all duration-300 ease-out z-50 flex items-center gap-3">
+            <span id="feedback-icon" class="flex-shrink-0"></span>
+            <span id="feedback-text" class="font-semibold text-sm"></span>
+        </div>
+    </div>
+
+    <script>
+        // Data Configuration
+        const freqLevels = [
+            { pct: '100%', word: 'altijd' },
+            { pct: '90%', word: 'meestal' },
+            { pct: '75%', word: 'vaak' },
+            { pct: '50%', word: 'regelmatig' },
+            { pct: '30%', word: 'soms' },
+            { pct: '10%', word: 'zelden' },
+            { pct: '0%', word: 'nooit' }
+        ];
+
+        // Aangepast om meerdere correcte opties te ondersteunen (waaronder inversie)
+        const wordOrderTasks = [
+            { 
+                words: ['vergaderen', 'op', 'vrijdag', 'wij', 'altijd'], 
+                correct: [
+                    'wij vergaderen altijd op vrijdag',
+                    'op vrijdag vergaderen wij altijd'
+                ] 
+            },
+            { 
+                words: ['meestal', 'het', 'is', 'weekend', 'vrij', 'hij', 'in'], 
+                correct: [
+                    'hij is meestal vrij in het weekend',
+                    'in het weekend is hij meestal vrij'
+                ] 
+            },
+            { 
+                words: ['nooit', 'mijn', 'stopt', 'baas', 'vroeg'], 
+                correct: ['mijn baas stopt nooit vroeg'] 
+            },
+            { 
+                words: ['ik', 'de', 'ochtend', 'vaak', 'in', 'sport'], 
+                correct: [
+                    'ik sport vaak in de ochtend',
+                    'in de ochtend sport ik vaak'
+                ] 
+            }
+        ];
+
+        const contextTasks = [
+            { q: "Mark gaat elke week 4 keer naar de sportschool. Dat is een vast patroon.", options: ['nooit', 'regelmatig', 'zelden'], correct: 'regelmatig', sentence: "Mark sport ... ." },
+            { q: "Ik haat koffie. De laatste keer dat ik het dronk was in 2015.", options: ['soms', 'altijd', 'nooit'], correct: 'nooit', sentence: "Ik drink ... koffie." },
+            { q: "Soms gaat Sarah met de auto, maar 9 van de 10 keer kiest ze de fiets.", options: ['vaak', 'meestal', 'zelden'], correct: 'meestal', sentence: "Sarah gaat ... met de fiets naar haar werk." },
+            { q: "Het regent hier bijna nooit, misschien twee keer per jaar.", options: ['vaak', 'zelden', 'regelmatig'], correct: 'zelden', sentence: "In dit land regent het ... ." }
+        ];
+
+        function showSection(sectionId, btn) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            document.getElementById('section-' + sectionId).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.className = 'tab-btn px-6 py-2.5 rounded-xl bg-white text-slate-600 font-semibold hover:bg-slate-100 transition-all';
+            });
+            btn.className = 'tab-btn px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold transition-all shadow-md';
+            hideFeedback();
+        }
+
+        // --- Drag & Drop ---
+        function initDragDrop() {
+            const bank = document.getElementById('word-bank');
+            const targetContainer = document.getElementById('drop-targets-container');
+            bank.innerHTML = ''; targetContainer.innerHTML = '';
+            [...freqLevels].sort(() => Math.random() - 0.5).forEach(lvl => {
+                const el = document.createElement('div');
+                el.className = 'drag-item bg-white border border-slate-200 px-4 py-2 rounded-xl shadow-sm text-slate-700 font-bold';
+                el.draggable = true; el.innerText = lvl.word; el.id = 'drag-' + lvl.word;
+                el.addEventListener('dragstart', (e) => e.dataTransfer.setData('text', e.target.id));
+                bank.appendChild(el);
+            });
+            freqLevels.forEach(lvl => {
+                const targetWrap = document.createElement('div');
+                targetWrap.className = 'flex items-center gap-4 drop-target-row';
+                targetWrap.dataset.correct = lvl.word;
+                targetWrap.innerHTML = `<span class="w-12 font-mono text-slate-400 text-sm font-bold">${lvl.pct}</span><div class="drop-zone flex-1 border-2 border-slate-100 rounded-xl bg-slate-50 p-2 min-h-[50px] flex items-center justify-center" ondrop="handleDrop(event)" ondragover="allowDrop(event)"></div>`;
+                targetContainer.appendChild(targetWrap);
+            });
+        }
+
+        window.allowDrop = (ev) => ev.preventDefault();
+        window.handleDrop = (ev) => {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedEl = document.getElementById(data);
+            const dropZone = ev.target.closest('.drop-zone');
+            if (dropZone) {
+                if (dropZone.children.length > 0) document.getElementById('word-bank').appendChild(dropZone.children[0]);
+                dropZone.appendChild(draggedEl);
+                hideFeedback();
+            }
+        };
+
+        function checkDragDrop() {
+            let correctCount = 0;
+            document.querySelectorAll('.drop-target-row').forEach(row => {
+                const expected = row.dataset.correct;
+                const zone = row.querySelector('.drop-zone');
+                const dropped = zone.querySelector('.drag-item');
+                zone.classList.remove('correct', 'incorrect');
+                if (dropped && dropped.innerText.toLowerCase() === expected) { zone.classList.add('correct'); correctCount++; }
+                else if (dropped) zone.classList.add('incorrect');
+            });
+            showFeedback(correctCount === freqLevels.length ? "Perfect gesorteerd!" : `Nog niet helemaal: ${correctCount} goed.`, correctCount === freqLevels.length ? "success" : "error");
+        }
+
+        function resetDragDrop() { initDragDrop(); hideFeedback(); }
+
+        // --- Word Order (Verbeterde Logica) ---
+        function initWordOrder() {
+            const container = document.getElementById('word-order-container');
+            container.innerHTML = '';
+            wordOrderTasks.forEach((task, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-6 border border-slate-100 rounded-2xl bg-white shadow-sm transition-all word-order-zone";
+                const shuffled = [...task.words].sort(() => Math.random() - 0.5);
+                div.innerHTML = `<h3 class="text-xs font-bold uppercase text-slate-400 mb-4">Zin ${idx + 1}</h3><div class="flex flex-wrap gap-2 mb-6" id="pool-${idx}">${shuffled.map(w => `<button onclick="moveToTarget(this, ${idx})" class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl shadow-sm font-medium transition-all">${w}</button>`).join('')}</div><div class="p-4 bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl min-h-[60px] flex flex-wrap gap-2 items-center" id="target-${idx}"></div>`;
+                container.appendChild(div);
+            });
+        }
+
+        window.moveToTarget = function(btn, idx) {
+            const target = document.getElementById(`target-${idx}`);
+            const pool = document.getElementById(`pool-${idx}`);
+            (btn.parentElement.id.startsWith('pool') ? target : pool).appendChild(btn);
+            hideFeedback();
+        };
+
+        function checkWordOrder() {
+            let correctCount = 0;
+            wordOrderTasks.forEach((task, idx) => {
+                const target = document.getElementById(`target-${idx}`);
+                const result = Array.from(target.children).map(c => c.innerText.toLowerCase().trim()).join(' ');
+                const zone = target.closest('.word-order-zone');
+                zone.classList.remove('correct', 'incorrect');
+                if (task.correct.includes(result)) { zone.classList.add('correct'); correctCount++; }
+                else if (result !== "") zone.classList.add('incorrect');
+            });
+            showFeedback(correctCount === wordOrderTasks.length ? "Uitstekend! Alles klopt." : "Sommige zinnen kloppen nog niet.", correctCount === wordOrderTasks.length ? "success" : "error");
+        }
+
+        // --- Context ---
+        function initContext() {
+            const container = document.getElementById('context-container');
+            container.innerHTML = '';
+            contextTasks.forEach((task, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-6 border border-slate-100 rounded-2xl bg-slate-50 transition-all context-zone";
+                div.innerHTML = `<div class="flex items-start gap-3 mb-4"><div class="bg-indigo-100 text-indigo-600 p-2 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg></div><p class="text-slate-600 italic leading-relaxed">${task.q}</p></div><div class="text-xl font-semibold text-slate-800">${task.sentence.replace('...', `<select id="context-sel-${idx}" class="mx-2 px-3 py-1.5 border-2 border-slate-200 rounded-xl bg-white shadow-sm focus:border-indigo-400 outline-none text-indigo-700"><option value="">---</option>${task.options.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`)}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function checkContext() {
+            let correctCount = 0;
+            contextTasks.forEach((task, idx) => {
+                const sel = document.getElementById(`context-sel-${idx}`);
+                const zone = sel.closest('.context-zone');
+                zone.classList.remove('correct', 'incorrect');
+                if (sel.value === task.correct) { zone.classList.add('correct'); correctCount++; }
+                else if (sel.value !== "") zone.classList.add('incorrect');
+            });
+            showFeedback(correctCount === contextTasks.length ? "Helemaal goed!" : "Kijk nog eens naar de situaties.", correctCount === contextTasks.length ? "success" : "error");
+        }
+
+        function showFeedback(msg, type) {
+            const fb = document.getElementById('feedback');
+            const fbText = document.getElementById('feedback-text');
+            const fbIcon = document.getElementById('feedback-icon');
+            fbText.innerText = msg; fb.classList.remove('hidden', 'bg-emerald-600', 'bg-rose-600', 'translate-y-20');
+            fb.classList.add('flex', 'translate-y-0', type === "success" ? 'bg-emerald-600' : 'bg-rose-600', 'text-white');
+            fbIcon.innerHTML = type === "success" ? `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>` : `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+        }
+
+        function hideFeedback() { document.getElementById('feedback').classList.add('translate-y-20'); }
+
+        window.onload = () => { initDragDrop(); initWordOrder(); initContext(); };
+    </script>
+</body>
+</html>
